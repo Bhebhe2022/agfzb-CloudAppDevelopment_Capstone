@@ -111,7 +111,7 @@ def get_dealerships(request):
     if request.method == "GET":
         context = {}
         context=dict()
-        url = "https://36cef25d.eu-gb.apigw.appdomain.cloud/api/dealership"
+        url = "https://22f68884.eu-gb.apigw.appdomain.cloud/api/dealership"
         
         # Get dealers from the URL
 
@@ -129,11 +129,11 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
     if request.method == "GET":
         context = {}
-        dealer_url = "https://36cef25d.eu-gb.apigw.appdomain.cloud/api/dealership"
+        dealer_url = "https://22f68884.eu-gb.apigw.appdomain.cloud/api/dealership"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         context["dealer"] = dealer
     
-        review_url = "https://36cef25d.eu-gb.apigw.appdomain.cloud/api/get-review"
+        review_url = "https://22f68884.eu-gb.apigw.appdomain.cloud/api/reviews"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
         context["reviews"] = reviews
@@ -147,7 +147,7 @@ def get_dealer_details(request, id):
 # View to submit a new review
 def add_review(request, id):
     context = {}
-    dealer_url = "https://36cef25d.eu-gb.apigw.appdomain.cloud/api/dealership"
+    dealer_url = "https://22f68884.eu-gb.apigw.appdomain.cloud/api/dealership"
     dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -180,6 +180,6 @@ def add_review(request, id):
 
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://36cef25d.eu-gb.apigw.appdomain.cloud/api/post-review"
+            review_post_url = "https://22f68884.eu-gb.apigw.appdomain.cloud/api/post_review"
             post_request(review_post_url, new_payload, id=id)
         return redirect("djangoapp:dealer_details", id=id)      

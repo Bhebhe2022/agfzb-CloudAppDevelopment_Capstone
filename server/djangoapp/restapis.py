@@ -60,7 +60,7 @@ def get_dealers_from_cf(url, **kwargs):
     # - Call get_request() with specified arguments
     json_result = get_request(url)
     if json_result:
-        dealers = json_result['body']
+        dealers = json_result['dealers']
         for dealer in dealers:
             dlr_data = dealer['doc']
             #print('ADDRESS', dlr_data["address"])
@@ -87,16 +87,24 @@ def get_dealers_from_cf(url, **kwargs):
 # Requires the dealer_id parameter with only a single value
 def get_dealer_by_id_from_cf(url, id):
     json_result = get_request(url, id=id)
-    print('json_result from line 54',json_result)
+   # print('json_result from line 54',json_result)
 
-    if json_result:
-        dealers = json_result["body"]
-        
-    
-        dealer_doc = dealers[0]
-        dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
-                                id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],  short_name=dealer_doc["short_name"],full_name=dealer_doc["full_name"],
-                                st=dealer_doc["st"], zip=dealer_doc["zip"])
+    if json_result.get("body"):
+        dealers = json_result["body"] 
+        for dealer in range(len(dealers)):
+            dealer = dealers[0]
+        dealer_obj = CarDealer(id=dealer["id"], city=dealer["city"],
+                                   st=dealer["st"], address=dealer["address"], zip=dealer["zip"],
+                                   lat=dealer["lat"],
+                                   long=dealer["long"], short_name=dealer["short_name"], full_name=dealer["full_name"])
+    elif json_result.get("dealers"):
+        dealers = json_result["dealers"]
+        #for dealer in range(len(dealers)):
+        dealer = dealers[id-1]
+        dealer_obj = CarDealer(id=dealer["doc"]["id"], city=dealer["doc"]["city"],
+                                   st=dealer["doc"]["st"], address=dealer["doc"]["address"], zip=dealer["doc"]["zip"],
+                                   lat=dealer["doc"]["lat"],
+                                   long=dealer["doc"]["long"], short_name=dealer["doc"]["short_name"], full_name=dealer["doc"]["full_name"])
     return dealer_obj
 
 
