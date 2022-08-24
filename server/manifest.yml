@@ -1,11 +1,11 @@
   applications:
   - name: djangoapp
     routes:
-      - route: Zabou75.eu-gb.mybluemix.net
+      - route: fm21.eu-gb.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-nginx
     routes:
-      - route: Zabou75.eu-gb.mybluemix.net/static
+      - route: fm21.eu-gb.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
